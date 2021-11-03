@@ -47,7 +47,7 @@ namespace NC_21.Controllers
         // GET: Students/Create
         public IActionResult Create()
         {
-            ViewData["GroupId"] = new SelectList(_context.Group, "Id", "Nazwa");
+            ViewData["GroupId"] = new SelectList(_context.Group.Include(g => g.Field), "Id", "NK");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace NC_21.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GroupId"] = new SelectList(_context.Group, "Id", "Nazwa", student.GroupId);
+            ViewData["GroupId"] = new SelectList(_context.Group.Include(g=>g.Field), "Id", "NK", student.GroupId);
             return View(student);
         }
 
@@ -81,7 +81,7 @@ namespace NC_21.Controllers
             {
                 return NotFound();
             }
-            ViewData["GroupId"] = new SelectList(_context.Group, "Id", "Nazwa", student.GroupId);
+            ViewData["GroupId"] = new SelectList(_context.Group.Include(g => g.Field), "Id", "NK", student.GroupId);
             return View(student);
         }
 
@@ -117,7 +117,7 @@ namespace NC_21.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GroupId"] = new SelectList(_context.Group, "Id", "Nazwa", student.GroupId);
+            ViewData["GroupId"] = new SelectList(_context.Group.Include(g => g.Field), "Id", "NK", student.GroupId);
             return View(student);
         }
 

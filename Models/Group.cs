@@ -16,5 +16,12 @@ namespace NC_21.Models
         public int FieldId { get; set; }
         public Field Field { get; set; }
         public ICollection<Student> Students { get; set; }
+        public string NK
+        {
+            get
+            {
+                return Nazwa + " " + Field.Nazwa;
+            }
+        }
     }
 }
