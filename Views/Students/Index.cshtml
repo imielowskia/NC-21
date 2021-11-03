@@ -27,33 +27,46 @@
             <th>
                 @Html.DisplayNameFor(model => model.Group)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group.Field)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group.Field.Institut)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Imie)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nazwisko)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Album)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data_start)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Group.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Imie)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nazwisko)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Album)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data_start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Group.Nazwa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Group.Field.Nazwa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Group.Field.Institut.Nazwa)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

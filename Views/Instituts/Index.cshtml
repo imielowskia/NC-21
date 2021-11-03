@@ -19,17 +19,37 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nazwa)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nazwa)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+            @foreach (var f in item.Fields)
+            {
+                <tr>
+                    <td colspan="2"> @f.Nazwa </td>
+                </tr>
+                @foreach (var g in f.Groups)
+                {
+                    <tr>
+                        <td></td>
+                        <td>
+                            @g.Nazwa
+                            @foreach (var s in g.Students)
+                            {
+                                <br /> @s.I_N
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        }
     </tbody>
 </table>

@@ -21,7 +21,7 @@ namespace NC_21.Controllers
         // GET: Fields
         public async Task<IActionResult> Index()
         {
-            var nC_21Context = _context.Field.Include(f => f.Institut);
+            var nC_21Context = _context.Field.Include(f => f.Institut).Include(f => f.Groups).ThenInclude(g => g.Students);
             return View(await nC_21Context.ToListAsync());
         }
 
@@ -47,7 +47,7 @@ namespace NC_21.Controllers
         // GET: Fields/Create
         public IActionResult Create()
         {
-            ViewData["InstitutId"] = new SelectList(_context.Institut, "Id", "Id");
+            ViewData["InstitutId"] = new SelectList(_context.Institut, "Id", "Nazwa");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace NC_21.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["InstitutId"] = new SelectList(_context.Institut, "Id", "Id", @field.InstitutId);
+            ViewData["InstitutId"] = new SelectList(_context.Institut, "Id", "Nazwa", @field.InstitutId);
             return View(@field);
         }
 
@@ -81,7 +81,7 @@ namespace NC_21.Controllers
             {
                 return NotFound();
             }
-            ViewData["InstitutId"] = new SelectList(_context.Institut, "Id", "Id", @field.InstitutId);
+            ViewData["InstitutId"] = new SelectList(_context.Institut, "Id", "Nazwa", @field.InstitutId);
             return View(@field);
         }
 
@@ -117,7 +117,7 @@ namespace NC_21.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["InstitutId"] = new SelectList(_context.Institut, "Id", "Id", @field.InstitutId);
+            ViewData["InstitutId"] = new SelectList(_context.Institut, "Id", "Nazwa", @field.InstitutId);
             return View(@field);
         }
 
