@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using NC_21.Models;
 
 namespace NC_21
 {
@@ -23,6 +25,9 @@ namespace NC_21
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<NC_21Context>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("NC_21Context")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
