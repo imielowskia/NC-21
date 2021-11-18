@@ -3,36 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NC_21.Models;
 
 namespace NC_21.Migrations
 {
     [DbContext(typeof(NC_21Context))]
-    partial class NC_21ContextModelSnapshot : ModelSnapshot
+    [Migration("20211116181411_add_course")]
+    partial class add_course
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.12")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("CourseField", b =>
-                {
-                    b.Property<int>("CoursesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FieldsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CoursesId", "FieldsId");
-
-                    b.HasIndex("FieldsId");
-
-                    b.ToTable("CourseField");
-                });
 
             modelBuilder.Entity("NC_21.Models.Course", b =>
                 {
@@ -132,21 +119,6 @@ namespace NC_21.Migrations
                     b.HasIndex("GroupId");
 
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("CourseField", b =>
-                {
-                    b.HasOne("NC_21.Models.Course", null)
-                        .WithMany()
-                        .HasForeignKey("CoursesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("NC_21.Models.Field", null)
-                        .WithMany()
-                        .HasForeignKey("FieldsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("NC_21.Models.Field", b =>

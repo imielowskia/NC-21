@@ -21,5 +21,6 @@ namespace NC_21.Models
         public DbSet<NC_21.Models.Group> Group { get; set; }
 
         public DbSet<NC_21.Models.Student> Student { get; set; }
+        public DbSet<NC_21.Models.Course> Course { get; set; }
     }
 }

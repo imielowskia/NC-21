@@ -1,4 +1,4 @@
-﻿@model NC_21.Models.Field
+﻿@model NC_21.Models.Course
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,7 +6,7 @@
 
 <h1>Edit</h1>
 
-<h4>Field</h4>
+<h4>Course</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -17,19 +17,6 @@
                 <label asp-for="Nazwa" class="control-label"></label>
                 <input asp-for="Nazwa" class="form-control" />
                 <span asp-validation-for="Nazwa" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InstitutId" class="control-label"></label>
-                <select asp-for="InstitutId" class="form-control" asp-items="ViewBag.InstitutId"></select>
-                <span asp-validation-for="InstitutId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="form-check">
-                    @foreach (var cou in ViewBag.Courses)
-                    {
-                        <input type="checkbox" name="selectedCourses" value="@cou.CourseId" @cou.Checked /> @cou.Nazwa <br />
-                    }
-                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

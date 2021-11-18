@@ -20,7 +20,7 @@ namespace NC_21.Models
         {
             get
             {
-                return Nazwa + " " + Field.Nazwa;
+                return Nazwa;
             }
         }
     }
