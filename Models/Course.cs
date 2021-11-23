@@ -13,5 +13,6 @@ namespace NC_21.Models
         public int Id { get; set; }
         public string Nazwa { get; set; }
         public ICollection<Field> Fields { get; set; }
+        public ICollection<CourseStudent> CourseStudents { get; set; }
     }
 }

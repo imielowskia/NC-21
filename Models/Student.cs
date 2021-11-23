@@ -22,6 +22,7 @@ namespace NC_21.Models
         public DateTime Data_start { get; set; }
         public int GroupId { get; set; }
         public Group Group { get; set; }
+        public ICollection<CourseStudent> CourseStudents { get; set; }
         public string I_N
         {
             get

@@ -15,12 +15,15 @@ namespace NC_21.Models
         }
 
         public DbSet<NC_21.Models.Institut> Institut { get; set; }
-
         public DbSet<NC_21.Models.Field> Field { get; set; }
-
         public DbSet<NC_21.Models.Group> Group { get; set; }
-
         public DbSet<NC_21.Models.Student> Student { get; set; }
         public DbSet<NC_21.Models.Course> Course { get; set; }
+        public DbSet<NC_21.Models.CourseStudent> CourseStudents { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CourseStudent>().HasKey(cs => new { cs.CourseId, cs.StudentId });
+        }
     }
 }
