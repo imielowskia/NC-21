@@ -21,7 +21,8 @@ namespace NC_21.Controllers
         // GET: Courses
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Course.ToListAsync());
+            var NC_21_Context = _context.Course.Include(c => c.Fields).ThenInclude(f => f.Groups).ThenInclude(g => g.Students);
+            return View(await NC_21_Context.ToListAsync());
         }
 
         // GET: Courses/Details/5
