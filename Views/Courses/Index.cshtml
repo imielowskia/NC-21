@@ -36,27 +36,34 @@
             @foreach (var f in item.Fields)
             {
                 <tr class="bg-info">
-                    <td colspan="3">@f.Nazwa </td>
+                    <td colspan="4">@f.Nazwa </td>
                 </tr>
                 @foreach (var g in f.Groups)
                 {
     <tr>
-        <td colspan="2">@g.Nazwa </td>
+        <td colspan="3">@g.Nazwa </td>
         <td> <a asp-action="TakeGrades" asp-route-courseid="@item.Id" asp-route-groupid="@g.Id" class="btn btn-sm btn-secondary">Oceń</a>   </td>
     </tr>
 
                     @foreach (var s in ViewBag.listaOcen)
                     {
-                        <tr>
+                        <tr class="bg-light">
                             
                                 @if (s.CourseId == item.Id & s.GroupId == g.Id)
                                 {
-                                    <td>@s.I_N </td>
-                                    <td>@s.Ocena</td>
-                                    <td>@s.Data</td>
-                                    
+                                    <td colspan="2">@s.I_N </td>
 
-                                }
+                                        @if (s.Ocena == 0 & s.Data == DateTime.Today)
+                                        {
+                                            <td></td><td></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@s.Ocena</td>
+                                            <td>@s.Data.ToString("dd/MM/yyyy") </td>
+                                            }
+
+                                 }
                         </tr>
                     }
                 }
