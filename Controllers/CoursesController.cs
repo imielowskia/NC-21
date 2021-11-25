@@ -22,6 +22,39 @@ namespace NC_21.Controllers
         public async Task<IActionResult> Index()
         {
             var NC_21_Context = _context.Course.Include(c => c.Fields).ThenInclude(f => f.Groups).ThenInclude(g => g.Students);
+            
+            var lista = new List<Grade>();
+            foreach (var c in NC_21_Context)
+            {
+                foreach(var f in c.Fields)
+                {
+                    foreach(var g in f.Groups)
+                    {
+                        foreach(var s in g.Students)
+                        {
+                            var xd = DateTime.Today;
+                            decimal xo = 0;
+                            var xcs = _context.CourseStudents.Where(x=>x.CourseId==c.Id & x.StudentId==s.Id) ;
+                            if (xcs.Count()>0)
+                            {
+                                xd = xcs.First().Data;
+                                xo = xcs.First().Ocena;
+                            }
+                            
+                            lista.Add(new Grade
+                            {
+                                StudentId = s.Id,
+                                CourseId = c.Id,
+                                GroupId = g.Id,
+                                I_N = s.I_N,
+                                Data = xd,
+                                Ocena = xo
+                            });
+                        }
+                    }
+                }
+            }
+            ViewData["listaOcen"] = lista;
             return View(await NC_21_Context.ToListAsync());
         }
 
@@ -149,5 +182,95 @@ namespace NC_21.Controllers
         {
             return _context.Course.Any(e => e.Id == id);
         }
+
+        //metoda do wyświetlania oceniania
+        public async Task<IActionResult> TakeGrades(int courseid, int groupid)
+        {
+            var course = await _context.Course.FindAsync(courseid);
+            var NC_21_Context = _context.Course.Where(c => c.Id == courseid).Include(c => c.Fields).ThenInclude(f => f.Groups).ThenInclude(g => g.Students);        
+            var lista = new List<Grade>();
+            var xkierunek = "";
+            var xgr = "";
+            var xid = courseid;
+            foreach (var c in NC_21_Context)
+            {
+                foreach (var f in c.Fields)
+                {
+                    foreach (var g in f.Groups)
+                    {
+    
+                        foreach (var s in g.Students.Where(s=>s.GroupId==groupid) )
+                        {
+                            xkierunek = f.Nazwa;
+                            xgr = g.Nazwa;
+                            var xd = DateTime.Today;
+                            decimal xo = 0;
+                            var xcs = _context.CourseStudents.Where(x => x.CourseId == c.Id & x.StudentId == s.Id);
+                            if (xcs.Count() > 0)
+                            {
+                                xd = xcs.First().Data;
+                                xo = xcs.First().Ocena;
+                            }
+
+                            lista.Add(new Grade
+                            {
+                                StudentId = s.Id,
+                                CourseId = c.Id,
+                                GroupId = g.Id,
+                                I_N = s.I_N,
+                                Data = xd,
+                                Ocena = xo
+                            });
+                        }
+                    }
+                }
+            }
+            ViewData["course"] = xid;
+            ViewData["field"] = xkierunek;
+            ViewData["group"] = xgr;
+            ViewData["listaOcen"] = lista;
+            return View(course);
+        }
+
+        //metoda do zapisywania oceniania
+        public async Task<IActionResult> SaveGrades(int id)
+        {
+            decimal xocena = 0;
+            int xid = 0;
+            var xdata = DateTime.Today;
+            var course = await _context.Course.FindAsync(id);
+            var oceny = HttpContext.Request.Form["listaOcen"];
+            var studenci = HttpContext.Request.Form["listaStudentow"];
+            var CS = new List<CourseStudent>();
+            int ile = studenci.Count();
+            for (int i=0;i<ile;i++)
+            {
+                xid = int.Parse(studenci[i]);
+                xocena = decimal.Parse(oceny[i]);
+                var xcs =_context.CourseStudents.Where(c => c.StudentId == xid & c.CourseId == id);
+                if (xcs.Any())
+                {
+                    var xgrade = _context.CourseStudents.Where(c => c.StudentId == xid & c.CourseId == id).Single();
+                    xgrade.Ocena = xocena;
+                    xgrade.Data = DateTime.Today;
+                    _context.Update(xgrade);
+                }
+                else
+                {
+                    var cs = new CourseStudent();
+                    cs.StudentId = xid;
+                    cs.CourseId = id;
+                    cs.Ocena = xocena;
+                    cs.Data = DateTime.Today;
+                    _context.Add(cs);
+                };
+                    
+                
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }

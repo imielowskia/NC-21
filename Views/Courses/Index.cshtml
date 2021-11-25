@@ -16,38 +16,51 @@
                 @Html.DisplayNameFor(model => model.Nazwa)
             </th>
             <th></th>
+            <th></th>
+       
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr class="bg-primary">
-            <td>
-                @Html.DisplayFor(modelItem => item.Nazwa)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">Edit</a> 
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">Details</a> 
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">Delete</a>
-            </td>
-        </tr>
-        @foreach(var f in item.Fields)
+        @foreach (var item in Model)
+        {
+            <tr class="bg-primary">
+                <td colspan="3">
+                    @Html.DisplayFor(modelItem => item.Nazwa)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">Delete</a>
+                </td>
+            </tr>
+            @foreach (var f in item.Fields)
+            {
+                <tr class="bg-info">
+                    <td colspan="3">@f.Nazwa </td>
+                </tr>
+                @foreach (var g in f.Groups)
                 {
-                    <tr class="bg-info">
-                        <td colspan="2">@f.Nazwa </td>
-                    </tr>
-                    @foreach(var g in f.Groups)
+    <tr>
+        <td colspan="2">@g.Nazwa </td>
+        <td> <a asp-action="TakeGrades" asp-route-courseid="@item.Id" asp-route-groupid="@g.Id" class="btn btn-sm btn-secondary">Oceń</a>   </td>
+    </tr>
+
+                    @foreach (var s in ViewBag.listaOcen)
                     {
                         <tr>
-                        <td>@g.Nazwa </td>
-                        <td>
-                            @foreach(var s in g.Students)
-                        {
-                            @s.I_N <br />
-                        }
-                        </td>
+                            
+                                @if (s.CourseId == item.Id & s.GroupId == g.Id)
+                                {
+                                    <td>@s.I_N </td>
+                                    <td>@s.Ocena</td>
+                                    <td>@s.Data</td>
+                                    
+
+                                }
                         </tr>
                     }
                 }
-}
+            }
+        }
     </tbody>
 </table>

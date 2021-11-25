@@ -1,0 +1,40 @@
+﻿@model NC_21.Models.Course
+
+@{
+    ViewData["Title"] = "TakeGrades";
+}
+
+<h1>TakeGrades</h1>
+
+<h4>Course</h4>
+<hr />
+
+<div>
+    <h4>Oceny dla przedmiotu:@Html.DisplayFor(model => model.Nazwa)</h4>
+    <hr />
+    <dl class="row">
+
+        <dd class="col-sm-10">
+            @ViewBag.field
+        </dd>
+        <dd> @ViewBag.group</dd>
+    </dl>
+</div>
+<form asp-action="SaveGrades" method="post">
+    <input type="hidden" asp-for="Id" value="@ViewBag.course" />
+    <div>
+        <table class="table table-sm">
+            @foreach(var g in ViewBag.listaOcen)
+        {
+            <tr>
+                <td>@g.I_N</td>
+                <td><input name="listaOcen" class="form-control" value="@g.Ocena" /> <input hidden name="listaStudentow" value="@g.StudentId"> </td>
+            </tr>
+
+        }
+
+        </table>
+        <button asp-controller="Courses" asp-action="SaveGrades">Zapisz</button>
+    </div>
+</form>
+<a asp-action="Index">Back to List</a>
