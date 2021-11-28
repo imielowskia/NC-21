@@ -20,6 +20,7 @@ namespace NC_21.Models
         public DbSet<NC_21.Models.Student> Student { get; set; }
         public DbSet<NC_21.Models.Course> Course { get; set; }
         public DbSet<NC_21.Models.CourseStudent> CourseStudents { get; set; }
+        public DbSet<NC_21.Models.CSGradeDetail> CSGradeDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

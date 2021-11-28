@@ -14,5 +14,6 @@ namespace NC_21.Models
         public string Nazwa { get; set; }
         public ICollection<Field> Fields { get; set; }
         public ICollection<CourseStudent> CourseStudents { get; set; }
+        public ICollection<CSGradeDetail> CSGradeDetails { get; set; }
     }
 }

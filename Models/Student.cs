@@ -23,6 +23,7 @@ namespace NC_21.Models
         public int GroupId { get; set; }
         public Group Group { get; set; }
         public ICollection<CourseStudent> CourseStudents { get; set; }
+        public ICollection<CSGradeDetail> CSGradeDetails { get; set; }
         public string I_N
         {
             get
