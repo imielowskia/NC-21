@@ -1,9 +1,10 @@
 ﻿
 <form asp-controller="Groups" asp-action="Details" method="post">
-    @foreach (var s in ViewBag.lista)        
+    @{string xin = "";}
+        @foreach (var s in ViewBag.lista)
         {
             <tr>
-                <td>@s.I_N</td>
+                <td>@if (s.I_N != xin) {@s.I_N}</td>
                 <td>
                     @if (s.Data.Year > 1900)
                     {@s.Data.ToString("dd/MM/yyyy")}
@@ -19,7 +20,7 @@
 
                 </td>
             </tr>
-            
+            xin = s.I_N;
         }
-    <tr><td colspan="4"> <input type="submit" value="Zapisz" /> </td></tr>
+    <tr><td colspan="4" class="text-center"> <input type="submit" value="Zapisz" class="btn btn-primary" /> </td></tr>
 </form>

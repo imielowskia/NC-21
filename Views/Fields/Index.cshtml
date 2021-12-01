@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table table-bordered">
+<table class="table table-borderless">
     <thead>
         <tr>
             <th>
@@ -24,7 +24,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="table-primary">
                 <td>
                     @Html.DisplayFor(modelItem => item.Nazwa)
                 </td>
@@ -32,13 +32,13 @@
                     @Html.DisplayFor(modelItem => item.Institut.Nazwa)
                 </td>
                 <td>
-                    @foreach(var c in item.Courses) { @c.Nazwa}
+                    @foreach(var c in item.Courses) { @c.Nazwa <br />}
 
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-info">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-info">Delete</a>
                 </td>
             </tr>
             @foreach (var g in item.Groups)
@@ -46,12 +46,12 @@
                 <tr>
 
                     <td colspan="3">
-                        @g.Nazwa
+                       Grupa: @g.Nazwa
                     </td>
                 </tr>
                 @foreach (var s in g.Students)
                 {
-                    <tr class="bg-light">
+                    <tr class="bg-light table-sm">
                         <td></td>
                         <td colspan="2">
                             @s.I_N

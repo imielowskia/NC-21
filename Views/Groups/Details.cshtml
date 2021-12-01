@@ -26,9 +26,15 @@
     <table class="table table-sm">
         @foreach (var p in Model.Field.Courses)
         {
-            <tr>
-                <td class="table-secondary" colspan="2">@p.Nazwa </td>
-                <td><a asp-action="Details" asp-route-id="@Model.Id" asp-route-typ="1" asp-route-xcr="@p.Id" class="btn btn-secondary">Ocenianie</a> </td>
+            <tr class="table-secondary">
+                <td colspan="2">@p.Nazwa </td>
+                <td class="text-right">
+                    @if (ViewBag.typ == 0)
+                    {
+                        <a asp-action="Details" asp-route-id="@Model.Id" asp-route-typ="1" asp-route-xcr="@p.Id" class="btn btn-secondary">Ocenianie</a>
+                    }
+
+                </td>
             </tr>
             @if (p.Id == ViewBag.cr & ViewBag.typ==1)
             {

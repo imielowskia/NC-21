@@ -2,7 +2,7 @@
 
 
 
-
+@{ string xin = "";}
 @foreach (var s in ViewBag.lista)
 {
 
@@ -10,7 +10,7 @@
     @if (s.Id > -1)
     {
         <tr>
-            <td>@s.I_N</td>
+            <td>@if (xin != s.I_N) { @s.I_N} </td>
             <td>
                 @if (s.Data.Year > 1900)
                 {@s.Data.ToString("dd/MM/yyyy")}
@@ -20,6 +20,7 @@
                 {@s.Ocena}
             </td>
         </tr>
+        xin = s.I_N;
     }
 
 }
