@@ -26,7 +26,7 @@ namespace NC_21.Controllers
         }
 
         // GET: Groups/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, int typ=0, int xcr = -1)
         {
             if (id == null)
             {
@@ -34,15 +34,60 @@ namespace NC_21.Controllers
             }
 
             var @group = await _context.Group
-                .Include(g => g.Field)
+                .Include(g => g.Field).ThenInclude(f=>f.Courses)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@group == null)
             {
                 return NotFound();
             }
-
+            ViewData["typ"] = typ;
+            ViewData["cr"] = xcr;
+            if (typ == 2)
+            {
+                int mid = 0;
+                decimal xocena = 0;
+                int xstudentid = 0;
+                var oceny = HttpContext.Request.Form["Ocena"];
+                var studenci = HttpContext.Request.Form["StudentId"];
+                var xid = HttpContext.Request.Form["Id_cs"];
+                for (int i=0; i < oceny.Count(); i++)
+                {
+                    xocena = decimal.Parse(oceny[i]);
+                    if (xocena > 0)
+                    {
+                        mid = int.Parse(xid[i]);
+                        xstudentid = int.Parse(studenci[i]);
+                        var xcs = _context.CSGradeDetails.Where(cs => cs.Id == mid);
+                        if (mid == -1)
+                        {
+                            var cs = new CSGradeDetail();
+                            cs.CourseId = xcr;
+                            cs.StudentId = xstudentid;
+                            cs.Ocena = xocena;
+                            cs.Data = DateTime.Today;
+                            _context.Add(cs);
+                        }
+                        else
+                        {
+                            var xcs1 = _context.CSGradeDetails.Where(cs => cs.Id == mid).Single();
+                            if (xcs1.Ocena != xocena)
+                            {
+                                xcs1.Ocena = xocena;
+                                xcs1.Data = DateTime.Today;
+                                _context.Update(xcs1);
+                            }
+                        }
+                    }
+                    
+                }
+                await _context.SaveChangesAsync();
+                typ = 0;
+                ViewData["typ"] = typ;
+            }
             return View(@group);
         }
+
+      
 
         // GET: Groups/Create
         public IActionResult Create()

@@ -1,0 +1,25 @@
+﻿
+<form asp-controller="Groups" asp-action="Details" method="post">
+    @foreach (var s in ViewBag.lista)        
+        {
+            <tr>
+                <td>@s.I_N</td>
+                <td>
+                    @if (s.Data.Year > 1900)
+                    {@s.Data.ToString("dd/MM/yyyy")}
+                </td>
+                <td>
+
+                    <input name="Ocena" class="form-control" value="@s.Ocena" />
+                    <input hidden name="StudentId" value="@s.StudentId" />
+                    <input hidden name="Id_cs" value="@s.Id" />
+                    <input hidden name="typ" value="2" />
+                    <input hidden name="xcr" value="@s.CourseId" />
+                    <input hidden name="id" value="@s.GroupId" />
+
+                </td>
+            </tr>
+            
+        }
+    <tr><td colspan="4"> <input type="submit" value="Zapisz" /> </td></tr>
+</form>

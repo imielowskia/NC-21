@@ -51,7 +51,7 @@
                             
                                 @if (s.CourseId == item.Id & s.GroupId == g.Id)
                                 {
-                                    <td colspan="2">@s.I_N </td>
+                                    <td>@s.I_N </td>
 
                                         @if (s.Ocena == 0 & s.Data == DateTime.Today)
                                         {
@@ -62,8 +62,9 @@
                                             <td>@s.Ocena</td>
                                             <td>@s.Data.ToString("dd/MM/yyyy") </td>
                                             }
-
+                                    
                                  }
+                                
                         </tr>
                     }
                 }

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<NC_21.Models.CSGradeDetail>
+
+
+
+
+@foreach (var s in ViewBag.lista)
+{
+
+
+    @if (s.Id > -1)
+    {
+        <tr>
+            <td>@s.I_N</td>
+            <td>
+                @if (s.Data.Year > 1900)
+                {@s.Data.ToString("dd/MM/yyyy")}
+            </td>
+            <td>
+                @if (s.Ocena > 0)
+                {@s.Ocena}
+            </td>
+        </tr>
+    }
+
+}
+
+
+
